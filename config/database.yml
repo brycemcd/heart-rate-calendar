@@ -1,8 +1,5 @@
 defaults: &defaults
-  adapter: mysql2
-  pool: 5
-  timeout: 5000
-  username: root
+  adapter: postgresql
 
 development:
   <<: *defaults
