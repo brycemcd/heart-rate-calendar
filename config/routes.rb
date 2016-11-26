@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'home/index'
+  root to: 'home#index'
+
+  get "/auth/:provider/callback" => "sessions#create"
+  get "heart_rate" => "heart_rate#index"
 end
