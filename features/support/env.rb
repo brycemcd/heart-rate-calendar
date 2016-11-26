@@ -57,3 +57,13 @@ end
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
 OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:fitbit] = OmniAuth::AuthHash.new({
+  :provider => 'fitbit',
+  :uid => '123545',
+  :info => {
+    :full_name => 'Tom Kadwill'
+  },
+  :credentials => {
+    :refresh_token => '1234abcde'
+  }
+})
