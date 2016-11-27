@@ -5,6 +5,7 @@ class User < ApplicationRecord
       user.uid = auth['uid']
       user.name = auth['info']['full_name']
       user.refresh_token = auth['credentials']['refresh_token']
+      user.access_token = auth['credentials']['token']
     end
   end
 end
