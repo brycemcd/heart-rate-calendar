@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'omniauth'
 gem 'omniauth-fitbit'
 gem "figaro"
+gem 'fitbit-api-client', require: 'fitbit'
 
 group :production do
   gem 'rails_12factor'

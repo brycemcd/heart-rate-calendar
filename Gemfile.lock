@@ -86,6 +86,8 @@ GEM
     ffi (1.9.14)
     figaro (1.1.1)
       thor (~> 0.14)
+    fitbit-api-client (0.0.17)
+      oauth2 (~> 1.0, >= 1.0.0)
     gherkin (4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -250,6 +252,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   figaro
+  fitbit-api-client
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

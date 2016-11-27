@@ -7,7 +7,8 @@ RSpec.describe User, type: :model do
       uid: '123',
       name: 'Tom',
       refresh_token: '123456ab',
-      access_token: '123.56abds'
+      access_token: '123.56abds',
+      token_expires_at: '1480273437'
     )
   end
 
