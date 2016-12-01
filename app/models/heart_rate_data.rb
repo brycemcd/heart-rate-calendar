@@ -1,5 +1,4 @@
 class HeartRateData < ApplicationRecord
-
   belongs_to :user, dependent: :destroy
 
   def update_heart_rate_data!
@@ -19,7 +18,7 @@ class HeartRateData < ApplicationRecord
   end
 
   def client
-    client = Fitbit::Client.new(
+    Fitbit::Client.new(
       client_id: ENV['FITBIT_OAUTH_CLIENT_ID'],
       client_secret: ENV['FITBIT_OAUTH_CLIENT_SECRET'],
       access_token: user.access_token,
