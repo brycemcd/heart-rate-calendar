@@ -1,0 +1,93 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://227Y28:4784c4e95f7d3bc6088e8597b7b12f26@api.fitbit.com/oauth2/token
+    body:
+      encoding: UTF-8
+      string: grant_type=refresh_token&refresh_token=1234abd
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Thu, 01 Dec 2016 18:41:05 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, private
+      Content-Language:
+      - en-GB
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 30a8abd849e53494-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: '{"errors":[{"errorType":"invalid_grant","message":"Refresh token invalid:
+        1234abd. Visit https://dev.fitbit.com/docs/oauth2 for more information on
+        the Fitbit Web API authorization process."}],"success":false}'
+    http_version: 
+  recorded_at: Thu, 01 Dec 2016 18:41:06 GMT
+- request:
+    method: get
+    uri: https://api.fitbit.com/1/user/-/activities/heart/date/2016-07-29/1d/1min.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - Bearer
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Thu, 01 Dec 2016 18:41:07 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '215'
+      Connection:
+      - keep-alive
+      Www-Authenticate:
+      - Bearer realm="api.fitbit.com"
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 30a8abe4bf713494-LHR
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"errorType":"invalid_client","message":"Invalid authorization
+        header format. Visit https://dev.fitbit.com/docs/oauth2 for more information
+        on the Fitbit Web API authorization process."}],"success":false}'
+    http_version: 
+  recorded_at: Thu, 01 Dec 2016 18:41:08 GMT
+recorded_with: VCR 3.0.0
