@@ -16,8 +16,10 @@ class HeartRateData < ApplicationRecord
     client.heart_rate_intraday_time_series(
       user_id: '-',
       date: date,
+      base_date: date,
       start_time: '00:00',
-      end_date: '24:00',
+      end_time: '23:59',
+      end_date: '1d',
       detail_level: '1min'
     )
   end
