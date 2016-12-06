@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'omniauth'
 gem 'omniauth-fitbit'
 gem "figaro"
-gem 'fitbit-api-client', require: 'fitbit'
+gem 'fitbit-api-client', require: 'fitbit', github: 'BME/fitbit-api-ruby-client', branch: 'fix_refresh_token_bug_#4'
 
 group :production do
   gem 'rails_12factor'

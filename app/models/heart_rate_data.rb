@@ -1,5 +1,5 @@
 class HeartRateData < ApplicationRecord
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 
   def update_heart_rate_data!(date: 'today')
     data = heart_rate_data_for_the_day(date)

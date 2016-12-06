@@ -1,6 +1,5 @@
 class User < ApplicationRecord
-
-  has_many :heart_rate_datas
+  has_many :heart_rate_datas, dependent: :destroy
 
   def self.create_with_omniauth(auth)
     create! do |user|
