@@ -15,4 +15,15 @@ RSpec.describe User, type: :model do
   it "User should have correct attributes" do
     expect(user.valid?).to eq(true)
   end
+
+  describe "#add_heart_rate_data!" do
+    it "creates heart rate data for today" do
+      expect { user.add_heart_rate_data! }.to change { user.heart_rate_datas.count }.from(0).to(1)
+    end
+
+    it "creates heart rate data for specified date" do
+      expect_any_instance_of(HeartRateData).to receive(:update_heart_rate_data!).with(date: '2016-07-01')
+      user.add_heart_rate_data!(date: '2016-07-01')
+    end
+  end
 end

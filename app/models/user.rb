@@ -11,4 +11,9 @@ class User < ApplicationRecord
       user.token_expires_at = auth['credentials']['expires_at']
     end
   end
+
+  def add_heart_rate_data!(date: 'today')
+    heart_rate_datas << HeartRateData.new
+    heart_rate_datas.last.update_heart_rate_data!(date: date)
+  end
 end
