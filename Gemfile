@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'omniauth'
 gem 'omniauth-fitbit'
 gem "figaro"
+gem 'fitbit-api-client', require: 'fitbit', github: 'BME/fitbit-api-ruby-client', branch: 'fix_refresh_token_bug_#4'
 
 group :production do
   gem 'rails_12factor'
@@ -43,6 +44,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -58,6 +60,8 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
