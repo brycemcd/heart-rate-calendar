@@ -1,4 +1,4 @@
-class HeartRateData < ApplicationRecord
+class ActivityJournal < ApplicationRecord
   belongs_to :user
 
   def update_heart_rate_data!(date: 'today')

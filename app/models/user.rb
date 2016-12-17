@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :heart_rate_datas, dependent: :destroy
+  has_many :activity_journals, dependent: :destroy
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -13,7 +13,7 @@ class User < ApplicationRecord
   end
 
   def add_heart_rate_data!(date: 'today')
-    heart_rate_datas << HeartRateData.new
-    heart_rate_datas.last.update_heart_rate_data!(date: date)
+    activity_journals << ActivityJournal.new
+    activity_journals.last.update_heart_rate_data!(date: date)
   end
 end

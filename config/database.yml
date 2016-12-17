@@ -1,13 +1,16 @@
 defaults: &defaults
   adapter: postgresql
+  user: web
+  password: web01
+  host: spark4.thedevranch.net
 
 development:
   <<: *defaults
-  database: heart-rate-development
+  database: heart_rate_development
 
 test:
   <<: *defaults
-  database: heart-rate-test
+  database: heart_rate_test
 
 production:
   <<: *defaults

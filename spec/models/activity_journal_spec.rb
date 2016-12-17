@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HeartRateData, type: :model do
+RSpec.describe ActivityJournal, type: :model do
   let(:user) { FactoryGirl.build(:user) }
   let(:heart_rate_data) { described_class.create!(user: user) }
 
