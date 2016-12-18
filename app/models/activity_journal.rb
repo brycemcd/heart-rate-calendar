@@ -1,27 +1,57 @@
 class ActivityJournal < ApplicationRecord
   belongs_to :user
 
-  def update_heart_rate_data!(date: 'today')
-    data = heart_rate_data_for_the_day(date)
-    return false unless data
+  validates :activity_type, inclusion: { in: %w(heart_rate steps) }
 
-    update!(data: data)
+  enum activity_type: {
+    unknown: 'unknown',
+    heart_rate: 'heart_rate',
+    steps: 'steps',
+  }
+
+  def update_heart_rate_data!(date: 'today')
+    update_record_with_data(:heart_rate_data_for_the_day, date, :heart_rate)
+  end
+
+  def update_step_count_data!(date: 'today')
+    update_record_with_data(:step_data_for_the_day, date, :steps)
   end
 
   private
 
-  def heart_rate_data_for_the_day(date)
-    return false unless valid_date?(date)
+  # TODO: refactor many of these methods below into their own service object
+  # passing around `date` everywhere is annoying and not properly factored
 
-    client.heart_rate_intraday_time_series(
-      user_id: '-',
-      date: date,
-      base_date: date,
-      start_time: '00:00',
-      end_time: '23:59',
-      end_date: '1d',
-      detail_level: '1min'
+  def update_record_with_data(intraday_type, date, activity_type)
+    return false unless valid_date?(date)
+    data = self.send(intraday_type, date)
+    return false unless data
+
+    update!(data: data, activity_type: activity_type)
+  end
+
+  def step_data_for_the_day(date)
+    client.activity_intraday_time_series(
+      fitbit_intraday_default_hash(date).merge(resource_path: 'activities/steps')
     )
+  end
+
+  def heart_rate_data_for_the_day(date)
+    client.heart_rate_intraday_time_series(
+      fitbit_intraday_default_hash(date)
+    )
+  end
+
+  def fitbit_intraday_default_hash(date)
+    {
+      base_date: date,
+      date: date,
+      detail_level: '1min',
+      end_date: '1d',
+      end_time: '23:59',
+      start_time: '00:00',
+      user_id: '-',
+    }
   end
 
   def client
