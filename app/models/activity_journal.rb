@@ -1,13 +1,16 @@
 class ActivityJournal < ApplicationRecord
-  belongs_to :user
-
-  validates :activity_type, inclusion: { in: %w(heart_rate steps) }
-
-  enum activity_type: {
+  SUPPORTED_ACTIVITY_TYPE_HASH = {
     unknown: 'unknown',
     heart_rate: 'heart_rate',
     steps: 'steps',
   }
+
+  belongs_to :user
+
+  validates :activity_type, inclusion: { in: %w(heart_rate steps) }
+
+
+  enum activity_type: SUPPORTED_ACTIVITY_TYPE_HASH
 
   def update_heart_rate_data!(date: 'today')
     update_record_with_data(:heart_rate_data_for_the_day, date, :heart_rate)
