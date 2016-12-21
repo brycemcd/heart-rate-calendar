@@ -8,6 +8,10 @@ class UserActivityJournalFetch
     reset_errors
   end
 
+  # NOTE: there is a lot of validation logic in this class. It might be better
+  # to move the validation logic out to it's own module
+  # FIXME: if this is run after the data is fetched, there may have been an error
+  # returned from the API but not registered here
   def valid?
     reset_errors
     valid_date?
@@ -28,19 +32,32 @@ class UserActivityJournalFetch
     user.activity_journals.create(
       activity_type: self.activity_type,
       journal_date: self.date,
-      data: self.api_response_data,
+      data: self.api_response_data.to_json,
     )
   end
 
   def fetch_data
     return false unless valid?
 
-    @api_response_data = api_call
+    begin
+      response = api_call
+      @api_response_data = response
+    rescue JSON::ParserError => e
+      @api_response_data = response
+      self.errors << "api call returned invalid json: #{self.api_response_data}"
+      return false
+    end
+
     self.api_response_data
   end
 
   def api_response_valid?
     fetch_data if self.api_response_data.nil?
+
+    if api_error_response?
+      self.errors << "api call returned an error: #{self.api_response_data}"
+      return false
+    end
 
     if !return_data_valid?
       self.errors << "api call returned invalid data: #{self.api_response_data}"
@@ -65,6 +82,10 @@ class UserActivityJournalFetch
     else
       self.api_response_data['activities-heart-intraday']['dataset'].any?
     end
+  end
+
+  private def api_error_response?
+    self.api_response_data.keys.include?('errors')
   end
 
   def step_data_for_the_day

@@ -4,7 +4,7 @@ namespace :activity_journal do
     bryce = User.where(uid: '3L5DLK', provider: 'fitbit').first
     activities = [:steps, :heart_rate]
 
-    (1..5).each do |days_ago|
+    5.downto(1).each do |days_ago|
 
       d = (Date.today - days_ago).to_s
 
