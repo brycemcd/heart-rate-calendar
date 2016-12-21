@@ -8,6 +8,20 @@ RSpec.describe UserActivityJournalFetch, type: :model do
   let(:heart_dc) { described_class.new(user: u, activity_type: :heart_rate) }
   let(:default_return_data) { {foo: :bar}.to_json }
 
+  describe 'the intended use case' do
+    it 'updates heart rate data, for a user' do
+      expect(u.activity_journals).to receive(:create).and_return(true)
+
+      heart_dc = described_class.new(user: u,
+                                     activity_type: :heart_rate,
+                                     date: (Date.today - 7).to_s
+                                    )
+      VCR.use_cassette("heart rate data today") do
+        heart_dc.create_journal_entry
+      end
+    end
+  end
+
   describe '#init' do
     it 'sets the readers attrs' do
       expect(dc.activity_type).to eql(at)

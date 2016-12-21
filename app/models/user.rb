@@ -11,17 +11,4 @@ class User < ApplicationRecord
       user.token_expires_at = auth['credentials']['expires_at']
     end
   end
-
-  def add_heart_rate_data!(date: 'today')
-    activity_journals << ActivityJournal.new(journal_date: date,
-                                             activity_type: 'heart_rate')
-    activity_journals.last.update_heart_rate_data!(date: date)
-  end
-
-  # notest
-  def add_step_data!(date: 'today')
-    activity_journals << ActivityJournal.new(journal_date: date,
-                                             activity_type: 'steps')
-    activity_journals.last.update_step_count_data!(date: date)
-  end
 end
