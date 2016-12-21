@@ -23,18 +23,31 @@ class UserActivityJournalFetch
   def create_journal_entry
     return false unless valid?
 
+    fetch_data if self.api_response_data.nil?
+
+    user.activity_journals.create(
+      activity_type: self.activity_type,
+      journal_date: self.date,
+      data: self.api_response_data,
+    )
+  end
+
+  def fetch_data
+    return false unless valid?
+
     @api_response_data = api_call
-    if !self.api_response_data
-      self.errors << "api call did not return data"
-      return false
-    end
+    self.api_response_data
+  end
+
+  def api_response_valid?
+    fetch_data if self.api_response_data.nil?
 
     if !return_data_valid?
       self.errors << "api call returned invalid data: #{self.api_response_data}"
       return false
     end
 
-    #update!(data: data, activity_type: activity_type)
+    true
   end
 
   private def api_call
