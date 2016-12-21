@@ -29,10 +29,13 @@ class UserActivityJournalFetch
 
     fetch_data if self.api_response_data.nil?
 
+    # TODO: test this
+    return false unless api_response_valid?
+
     user.activity_journals.create(
       activity_type: self.activity_type,
       journal_date: self.date,
-      data: self.api_response_data.to_json,
+      data: self.api_response_data,
     )
   end
 
