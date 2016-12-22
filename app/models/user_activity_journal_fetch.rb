@@ -115,8 +115,8 @@ class UserActivityJournalFetch
 
   def client
     Fitbit::Client.new(
-      client_id: ENV['fitbit_oauth_client_id'],
-      client_secret: ENV['fitbit_oauth_client_secret'],
+      client_id: ENV['FITBIT_OAUTH_CLIENT_ID'],
+      client_secret: ENV['FITBIT_OAUTH_CLIENT_SECRET'],
       access_token: self.user.access_token,
       refresh_token: self.user.refresh_token,
       expires_at: self.user.token_expires_at
