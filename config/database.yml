@@ -1,6 +1,6 @@
 defaults: &defaults
   adapter: postgresql
-  user: web
+  username: web
   password: web01
   host: spark4.thedevranch.net
 
