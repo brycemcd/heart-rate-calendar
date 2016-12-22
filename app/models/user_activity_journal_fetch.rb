@@ -42,16 +42,7 @@ class UserActivityJournalFetch
   def fetch_data
     return false unless valid?
 
-    begin
-      response = api_call
-      @api_response_data = response
-    rescue JSON::ParserError => e
-      @api_response_data = response
-      self.errors << "api call returned invalid json: #{self.api_response_data}"
-      return false
-    end
-
-    self.api_response_data
+    @api_response_data = api_call
   end
 
   def api_response_valid?
@@ -88,7 +79,7 @@ class UserActivityJournalFetch
   end
 
   private def api_error_response?
-    self.api_response_data.keys.include?('errors')
+    self.api_response_data&.keys&.include?('errors')
   end
 
   def step_data_for_the_day

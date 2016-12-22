@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ActivityJournal, type: :model do
   describe "before_validation" do
     it 'assigns a hash value to the data' do
-      aj = build(:activity_journal, data: {foo: :bar}.to_json)
+      aj = build(:activity_journal, data: {foo: :bar})
       expect(aj.data_hash).to be_nil
       aj.valid?
       expect(aj.data_hash).to_not be_nil

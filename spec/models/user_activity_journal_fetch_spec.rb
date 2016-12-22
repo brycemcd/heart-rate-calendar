@@ -6,7 +6,7 @@ RSpec.describe UserActivityJournalFetch, type: :model do
   let(:dc) { described_class.new(user: u, activity_type: at) }
   let(:invalid_dc) { described_class.new(user: u, activity_type: :bunk) }
   let(:heart_dc) { described_class.new(user: u, activity_type: :heart_rate) }
-  let(:default_return_data) { {foo: :bar}.to_json }
+  let(:default_return_data) { {foo: :bar} }
 
   describe 'the intended use case' do
     xit 'updates heart rate data for a user' do
@@ -62,7 +62,7 @@ RSpec.describe UserActivityJournalFetch, type: :model do
     end
 
     context 'api errors' do
-      let(:error_response) { {errors: [this: :is_wrong]}.to_json }
+      let(:error_response) { {'errors' => [this: :is_wrong]} }
 
       it 'is not valid if json includes `errors` key' do
         expect(dc).to receive(:api_call).and_return(error_response)
@@ -114,15 +114,6 @@ RSpec.describe UserActivityJournalFetch, type: :model do
         expect(dc.errors).to_not be_empty
       end
     end
-
-    context 'when return data is invalid json' do
-      it 'sets the response_data but still contains errors' do
-        response = 'this is invalid json. barf'
-        expect(dc).to receive(:api_call).and_return(response)
-        expect(dc.fetch_data).to be_falsey
-        expect(dc.api_response_data).to eql(response)
-      end
-    end
   end
 
   describe '#api_response_valid?' do
@@ -166,7 +157,7 @@ RSpec.describe UserActivityJournalFetch, type: :model do
         raw_data = <<-EOF
         {"activities-steps":[{"dateTime":"today","value":"0"}],"activities-steps-intraday":{"dataset":[{"time":"00:00:00","value":0}]}}
         EOF
-        expect(dc).to receive(:api_call).and_return(raw_data)
+        expect(dc).to receive(:api_call).and_return(JSON.parse(raw_data))
 
         expect(dc.api_response_valid?).to be_falsey
         expect(dc.errors).to_not be_empty
@@ -181,7 +172,7 @@ RSpec.describe UserActivityJournalFetch, type: :model do
         EOF
 
         obj = heart_dc
-        expect(obj).to receive(:api_call).and_return(raw_data)
+        expect(obj).to receive(:api_call).and_return(JSON.parse(raw_data))
 
         expect(obj.api_response_valid?).to be_falsey
         expect(obj.errors).to_not be_empty
@@ -192,6 +183,7 @@ RSpec.describe UserActivityJournalFetch, type: :model do
   describe '#create_journal_entry' do
     it "fetches api data if it hasn't been fetched yet and saves the record" do
       expect(dc).to receive(:fetch_data).and_return(default_return_data)
+      expect(dc).to receive(:api_response_valid?).and_return(true)
       expect(u.activity_journals).to receive(:create).and_return(true)
 
       dc.create_journal_entry
