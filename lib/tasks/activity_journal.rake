@@ -4,6 +4,10 @@ namespace :activity_journal do
     bryce = User.where(uid: '3L5DLK', provider: 'fitbit').first
     activities = [:steps, :heart_rate]
 
+    # NOTE: this creates a need to move the Fitbit Client code out to its own class
+    client = UserActivityJournalFetch.new(user: bryce, activity_type: :steps).client
+    client.refresh!
+
     5.downto(1).each do |days_ago|
 
       d = (Date.today - days_ago).to_s
