@@ -7,6 +7,8 @@ namespace :activity_journal do
     # NOTE: this creates a need to move the Fitbit Client code out to its own class
     client = UserActivityJournalFetch.new(user: bryce, activity_type: :steps).client
     client.refresh!
+    # the refresh token that was just updated need to be present in the 'bryce' object
+    bryce = bryce.reload
 
     5.downto(1).each do |days_ago|
 
