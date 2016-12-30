@@ -55,10 +55,10 @@ CREATE TABLE activity_journals (
     user_id integer,
     activity_type activiy_journal_activity_type_enum DEFAULT 'unknown'::activiy_journal_activity_type_enum NOT NULL,
     journal_date timestamp without time zone DEFAULT '1900-01-01 00:00:00'::timestamp without time zone NOT NULL,
-    created_at timestamp without time zone DEFAULT '1900-01-01 00:00:00'::timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone DEFAULT '1900-01-01 00:00:00'::timestamp without time zone NOT NULL,
     data_hash character varying NOT NULL,
-    archived boolean DEFAULT false NOT NULL
+    archived boolean DEFAULT false NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
