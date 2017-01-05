@@ -115,7 +115,9 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     refresh_token character varying,
     access_token character varying,
-    token_expires_at character varying
+    token_expires_at character varying,
+    fitbit_oauth_client_id character varying,
+    fitbit_oauth_client_secret character varying
 );
 
 
@@ -212,6 +214,6 @@ ALTER TABLE ONLY activity_journals
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161119133749'), ('20161125192448'), ('20161127103834'), ('20161127110902'), ('20161128185007'), ('20161128190028'), ('20161217221726'), ('20161218012457'), ('20161221032926'), ('20161221224501'), ('20161221225422');
+INSERT INTO schema_migrations (version) VALUES ('20161119133749'), ('20161125192448'), ('20161127103834'), ('20161127110902'), ('20161128185007'), ('20161128190028'), ('20161217221726'), ('20161218012457'), ('20161221032926'), ('20161221224501'), ('20161221225422'), ('20170105030707');
 
 
